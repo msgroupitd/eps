@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "d3596be8-3103-44d7-bdee-36ef25338c70",
+		"name": "API doc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Отправить заказ со стенда в 1С",
+			"id": "95c7910c-9063-486f-bb31-8620821d2bca",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"1234567890ABCDEF00000000\",\n  \"orderitems\": [\n    {\n      \"orderitem\": \"AU105PRG\"\n    },\n    {\n      \"orderitem\": \"AU105PRG\"\n    }\n  ],\n  \"signature\": \"ullamco nostrud non amet\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orderfunc",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orderfunc"
+					]
+				},
+				"description": "Отправить заказ со стенда в 1С"
+			},
+			"response": [
+				{
+					"id": "41661990-59f4-4a85-bba5-bf2cbb8df845",
+					"name": "Заказ создан успешно",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"1234567890ABCDEF00000000\",\n  \"orderitems\": [\n    {\n      \"orderitem\": \"AU105PRG\"\n    },\n    {\n      \"orderitem\": \"AU105PRG\"\n    }\n  ],\n  \"signature\": \"in culpa velit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orderfunc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orderfunc"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"ordernum\": \"MS01-00000\",\n  \"orderdetails\": {\n    \"id\": \"1234567890ABCDEF00000000\",\n    \"orderitems\": [\n      {\n        \"orderitem\": \"AU105PRG\"\n      },\n      {\n        \"orderitem\": \"AU105PRG\"\n      }\n    ],\n    \"signature\": \"elit a\"\n  }\n}"
+				},
+				{
+					"id": "1384fda5-5137-4f89-a86f-16c3ea944289",
+					"name": "Плохой запрос. Запрос не соответствует спецификации",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"1234567890ABCDEF00000000\",\n  \"orderitems\": [\n    {\n      \"orderitem\": \"AU105PRG\"\n    },\n    {\n      \"orderitem\": \"AU105PRG\"\n    }\n  ],\n  \"signature\": \"in culpa velit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orderfunc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orderfunc"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"orderdetails\": {\n    \"id\": \"1234567890ABCDEF00000000\",\n    \"orderitems\": [\n      {\n        \"orderitem\": \"AU105PRG\"\n      },\n      {\n        \"orderitem\": \"AU105PRG\"\n      }\n    ],\n    \"signature\": \"molli\"\n  },\n  \"errorcode\": 1,\n  \"errordesc\": \"Сервис временно недоступен\"\n}"
+				},
+				{
+					"id": "e432bc6c-9f47-4dfb-80a2-39fd0a7ea0a4",
+					"name": "Запрос не прошел авторизацию. Неверная цифровая подпись",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"1234567890ABCDEF00000000\",\n  \"orderitems\": [\n    {\n      \"orderitem\": \"AU105PRG\"\n    },\n    {\n      \"orderitem\": \"AU105PRG\"\n    }\n  ],\n  \"signature\": \"in culpa velit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orderfunc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orderfunc"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"orderdetails\": {\n    \"id\": \"1234567890ABCDEF00000000\",\n    \"orderitems\": [\n      {\n        \"orderitem\": \"AU105PRG\"\n      },\n      {\n        \"orderitem\": \"AU105PRG\"\n      }\n    ],\n    \"signature\": \"molli\"\n  },\n  \"errorcode\": 1,\n  \"errordesc\": \"Сервис временно недоступен\"\n}"
+				},
+				{
+					"id": "a25574cd-91e6-4654-9902-9145bfdd59c2",
+					"name": "Внутренняя ошибка. Сервер 1С не отвечает",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"1234567890ABCDEF00000000\",\n  \"orderitems\": [\n    {\n      \"orderitem\": \"AU105PRG\"\n    },\n    {\n      \"orderitem\": \"AU105PRG\"\n    }\n  ],\n  \"signature\": \"in culpa velit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orderfunc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orderfunc"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"orderdetails\": {\n    \"id\": \"1234567890ABCDEF00000000\",\n    \"orderitems\": [\n      {\n        \"orderitem\": \"AU105PRG\"\n      },\n      {\n        \"orderitem\": \"AU105PRG\"\n      }\n    ],\n    \"signature\": \"molli\"\n  },\n  \"errorcode\": 1,\n  \"errordesc\": \"Сервис временно недоступен\"\n}"
+				},
+				{
+					"id": "657d283a-2d6c-47a9-907f-734afca76481",
+					"name": "Неопознанная ошибка",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"1234567890ABCDEF00000000\",\n  \"orderitems\": [\n    {\n      \"orderitem\": \"AU105PRG\"\n    },\n    {\n      \"orderitem\": \"AU105PRG\"\n    }\n  ],\n  \"signature\": \"in culpa velit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orderfunc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orderfunc"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"orderdetails\": {\n    \"id\": \"1234567890ABCDEF00000000\",\n    \"orderitems\": [\n      {\n        \"orderitem\": \"AU105PRG\"\n      },\n      {\n        \"orderitem\": \"AU105PRG\"\n      }\n    ],\n    \"signature\": \"molli\"\n  },\n  \"errorcode\": 1,\n  \"errordesc\": \"Сервис временно недоступен\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "username",
+				"value": "<Basic Auth Username>",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "<Basic Auth Password>",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"id": "05de7a05-c111-4f61-9d03-e2e99cfc3c30",
+			"key": "baseUrl",
+			"value": "api.servicems.eu:37300",
+			"type": "string"
+		}
+	]
+}
