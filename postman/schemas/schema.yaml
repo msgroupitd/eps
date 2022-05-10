@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'EPS'
+  license:
+    name: MIT
+servers:
+  - url: 'api.servicems.eu:37300'
+paths:
+    /orderfunc:
+        post:
+            summary: 'Отправить заказ со стенда в 1С'
+            description: 'Отправить заказ со стенда в 1С'
+            operationId: sendOrder
+            tags:
+                - order
+            requestBody:
+                description: 'Параметры заказа'
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/order'
+            responses:
+                '200':
+                    description: 'Заказ создан успешно'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/responsesuccess'
+                '400':
+                    description: 'Плохой запрос. Запрос не соответствует спецификации'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/responseerror'
+                '403':
+                    description: 'Запрос не прошел авторизацию. Неверная цифровая подпись'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/responseerror'
+                '500':
+                    description: 'Внутренняя ошибка. Сервер 1С не отвечает'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/responseerror'
+                default:
+                    description: 'Неопознанная ошибка'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/responseerror'
+components:
+    schemas:
+        order:
+            type: object
+            required:
+                - id
+                - orderitems
+                - signature
+            properties:
+                id:
+                    type: string
+                    format: binary
+                    description: 'Уникальный ID стенда\процессора'
+                    example: '1234567890ABCDEF00000000'
+                orderitems:
+                    type: array
+                    items:
+                        type: object
+                        required:
+                            - orderitem
+                        properties:
+                            orderitem:
+                                type: string
+                                description: 'Уникальный идентификатор заказываемого функционала'
+                                example: 'AU105PRG'
+                signature:
+                    type: string
+                    format: binary
+                    description: 'Цифровая подпись'
+        responsesuccess:
+            type: object
+            required:
+                - ordernum
+                - orderdetails
+            properties:
+                ordernum:
+                    type: string
+                    description: 'Номер заказа'
+                    example: 'MS01-00000'
+                orderdetails:
+                    $ref: '#/components/schemas/order'
+        responseerror:
+            type: object
+            required:
+                - ordernum
+                - orderdetails
+            properties:
+                errorcode:
+                    type: integer
+                    format: int32
+                    description: 'Код ошибки'
+                    example: 1
+                errordesc:
+                    type: string
+                    description: 'Описание ошибки'
+                    example: 'Сервис временно недоступен'
+                orderdetails:
+                    $ref: '#/components/schemas/order'
+    securitySchemes:
+        BasicAuth:
+            type: http
+            scheme: basic
+security:
+  - BasicAuth: []
