@@ -80,6 +80,7 @@ components:
                 signature:
                     type: string
                     format: binary
+                    example: 'dfa1376424234fa'
                     description: 'Цифровая подпись'
         responsesuccess:
             type: object
