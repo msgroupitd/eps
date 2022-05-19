@@ -1,0 +1,19 @@
+version: ‘3’
+
+services:
+
+  docker-eps:
+    volumes:
+      - "../src:/var/www/html"
+
+    build:
+
+      context: .
+
+      dockerfile: docker/Dockerfile
+
+    image: docker-eps
+
+    ports:
+      - "8082:80"
+      - "4433:443"
