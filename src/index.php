@@ -13,7 +13,7 @@ if (empty($data)) {
 	return $service->response(405);
 }
 
-if(!$service->auth($data)){
+if(!$service->auth()){
 	return $service->response(401);
 }
 
@@ -25,7 +25,7 @@ if(!$service->load($data)){
 	return $service->response(412);
 }
 
-if(!$service->send($data)){
+if(!$service->send()){
 	return $service->response(500);
 }
 

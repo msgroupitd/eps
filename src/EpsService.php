@@ -5,7 +5,9 @@ class EpsService
 	private $httpVersion = "HTTP/1.1";
 	private $url;
 	private $data;
+	const ENV_DEV = 'dev';
 	const ENV_PROD = 'prod';
+	const ENV_TEST = 'test';
 	/**
 	 * @var string[]
 	 */
@@ -23,7 +25,22 @@ class EpsService
 	 * @var array|false|string
 	 */
 	private $epsPass;
+	/**
+	 * @var
+	 */
 	private $isDev;
+	/**
+	 * @var
+	 */
+	private $isTest;
+	/**
+	 * @var
+	 */
+	private $username1c;
+	/**
+	 * @var
+	 */
+	private $password1c;
 
 	/**
 	 * @var array
@@ -37,13 +54,16 @@ class EpsService
 	private function initEnv($envParam)
 	{
 		header("Content-Type:application/json");
-		$this->isDev = !($envParam == self::ENV_PROD);
+		$this->isDev = ($envParam == self::ENV_DEV);
+		$this->isTest = ($envParam == self::ENV_TEST);
 		$this->url = $this->isDev ? getenv('DEV_URL_1C') : getenv('URL_1C');
 		$this->epsUser = $this->isDev ? getenv('DEV_EPS_USER') : getenv('EPS_USER');
 		$this->epsPass = $this->isDev ? getenv('DEV_EPS_PASS') : getenv('EPS_PASS');
+		$this->username1c = $this->isDev ? getenv('DEV_1C_USER') : getenv('1C_USER');
+		$this->password1c = $this->isDev ? getenv('DEV_1C_PASS') : getenv('1C_PASS');
 	}
 
-	public function auth(array $data) : bool
+	public function auth() : bool
 	{
 		$isAuth = false;
 
@@ -76,13 +96,15 @@ class EpsService
 		return true;
 	}
 
-	public function send(array $data) : bool
+	public function send() : bool
 	{
 		$ch = curl_init( $this->url );
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $this->data );
+		$payload = json_encode( $this->data );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		$result = $this->isDev ? $this->responceData : curl_exec($ch);
+		curl_setopt($ch, CURLOPT_USERPWD, $this->username1c . ":" . $this->password1c);
+		$result = $this->isTest ? $this->responceData : curl_exec($ch);
 		$err = curl_error($ch);
 		curl_close($ch);
 		if (!empty($err)){
@@ -92,26 +114,30 @@ class EpsService
 		return true;
 	}
 
-	public function response($code, $message = '')
+	public function response($code, $message = '') : bool
 	{
 		header($this->httpVersion. " ". $code ." ". $message);
 		print_r($this->errorMessages[$code].', message:'.$message, $code);
 		die();
 	}
 	private $responceData = '{
-	  "ordernum": "MS01-00000",
-	  "orderdetails": {
-		"id": "1234567890ABCDEF00000000",
-		"orderitems": [
-		  {
-			"orderitem": "AU105PRG"
-		  },
-		  {
-			"orderitem": "AU105PRG"
-		  }
-		],
-		"signature": "dfa1376424234fa"
-	  }
-	}';
+    "OrderNum": "MS06-041910",
+    "ОrderDetails": {
+        "id": "1234567890ABCDEF00000000",
+        "orderitems": [
+            {
+                "orderitem": "AU105PRG"
+            },
+            {
+                "orderitem": "AU105PRG"
+            }
+        ],
+        "signature": "dfa1376424234fa",
+        "Comments": "ООО Тест, test@gmail.com"
+    },
+    "ErrorСode": 0,
+    "ErrorDescr": "Заказ уже был загружен",
+    "ErrorsExists": false
+}';
 
 }
