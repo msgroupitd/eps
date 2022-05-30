@@ -13,10 +13,6 @@ if (empty($data)) {
 	return $service->response(405);
 }
 
-if(!$service->auth()){
-	return $service->response(401);
-}
-
 if(!$service->validate($data)){
 	return $service->response(400);
 }
