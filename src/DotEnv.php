@@ -18,7 +18,7 @@ class DotEnv
 		$this->path = $path;
 	}
 
-	public function load() :void
+	public function load()
 	{
 		if (!is_readable($this->path)) {
 			throw new \RuntimeException(sprintf('%s file is not readable', $this->path));
