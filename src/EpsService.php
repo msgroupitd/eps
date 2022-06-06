@@ -120,6 +120,8 @@ class EpsService
 		$ch = curl_init( $this->url );
 		$payload = json_encode( $this->data );
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, getenv('CHECK_1C_SSL_SERTIFICATE'));
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, getenv('CHECK_1C_SSL_SERTIFICATE'));
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt($ch, CURLOPT_USERPWD, $this->username1c . ":" . $this->password1c);
