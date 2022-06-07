@@ -88,11 +88,10 @@ class EpsService
 		if (isset($data['orderitems']) && !empty($data['orderitems'])) {
 			if (is_array($data['orderitems'])) {
 				foreach ($data['orderitems'] as $orderItem) {
-					$validationString .= $orderItem->orderitem;
+					$validationString .= $orderItem['orderitem'];
 				}
 			}
 		}
-
 		$signatureString =  hash('sha256', $validationString);
 
 		if ($signatureString == $data['signature']) {
